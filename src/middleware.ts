@@ -1,14 +1,16 @@
 import { clerkMiddleware } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
 
 export default clerkMiddleware();
 
 export const config = {
   matcher: [
     /*
-     * Match all routes except for:
-     * - static files
-     * - Next.js internals
+     * Match all request paths except:
+     * - _next (static files)
+     * - favicon
+     * - public files
      */
-    "/((?!_next|.*\\..*).*)",
+    "/((?!_next|favicon.ico).*)",
   ],
 };
