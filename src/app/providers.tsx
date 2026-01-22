@@ -2,7 +2,7 @@
 
 import { ClerkProvider } from "@clerk/nextjs";
 import { ConvexProvider } from "convex/react";
-import { convex } from "../convexClient";
+import { convex } from "../lib/convexClient";
 
 export default function Providers({
     children,
