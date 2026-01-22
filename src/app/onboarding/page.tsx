@@ -3,6 +3,9 @@
 import { useState } from "react";
 import { useUser } from "@clerk/nextjs";
 
+export const dynamic = "force-dynamic";
+
+
 export default function OnboardingPage() {
   const { user } = useUser();
   const [birthdate, setBirthdate] = useState("");

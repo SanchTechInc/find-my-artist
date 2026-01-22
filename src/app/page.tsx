@@ -1,5 +1,9 @@
 import Link from "next/link";
 
+
+export const dynamic = "force-dynamic";
+
+
 export default function HomePage() {
   return (
     <main className="max-w-3xl mx-auto p-10 space-y-6">

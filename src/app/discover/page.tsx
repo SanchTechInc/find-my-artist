@@ -4,8 +4,12 @@ import { useState } from "react";
 import { useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 
+
 type Role = "writer" | "artist" | "both" | "";
 type Medium = "game" | "comic" | "book" | "film" | "";
+
+export const dynamic = "force-dynamic";
+
 
 export default function DiscoverPage() {
   const [role, setRole] = useState<Role>("");
