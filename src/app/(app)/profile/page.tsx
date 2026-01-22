@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -8,9 +10,6 @@ import { api } from "../../../../convex/_generated/api";
 /** Types that mirror Convex schema */
 type Role = "writer" | "artist" | "both";
 type Medium = "game" | "comic" | "book" | "film";
-
-export const dynamic = "force-dynamic";
-
 
 export default function ProfilePage() {
   const { user } = useUser();
