@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { useMutation, useQuery } from "convex/react";
-import { api } from "../../../convex/_generated/api";
+import { api } from "../../../../convex/_generated/api";
 
 /** Types that mirror Convex schema */
 type Role = "writer" | "artist" | "both";
