@@ -1,19 +1,23 @@
 "use client";
 
 import { ClerkProvider } from "@clerk/nextjs";
-import { ConvexProvider } from "convex/react";
-import { convex } from "../lib/convexClient";
+import dynamic from "next/dynamic";
+
+const ConvexProvider = dynamic(
+  () => import("convex/react").then((m) => m.ConvexProvider),
+  { ssr: false }
+);
+
+import { convex } from "@/lib/convexClient";
 
 export default function Providers({
-    children,
+  children,
 }: {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-    return (
-        <ClerkProvider>
-            <ConvexProvider client={convex}>
-                {children}
-            </ConvexProvider>
-        </ClerkProvider>
-    );
-};
+  return (
+    <ClerkProvider>
+      <ConvexProvider client={convex}>{children}</ConvexProvider>
+    </ClerkProvider>
+  );
+}
