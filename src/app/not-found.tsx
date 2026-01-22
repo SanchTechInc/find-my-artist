@@ -1,10 +1,8 @@
-export const dynamic = "force-static";
-
 export default function NotFound() {
   return (
-    <main style={{ padding: "2rem", textAlign: "center" }}>
-      <h1>404 – Page Not Found</h1>
-      <p>The page you’re looking for doesn’t exist.</p>
-    </main>
+    <div style={{ padding: 40 }}>
+      <h1>404</h1>
+      <p>Page not found</p>
+    </div>
   );
 }

@@ -1,11 +1,11 @@
-export const dynamic = "force-dynamic";
+"use client";
 
-import Providers from "../providers";
+import { ClerkProvider } from "@clerk/nextjs";
 
 export default function AppLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <Providers>{children}</Providers>;
+  return <ClerkProvider>{children}</ClerkProvider>;
 }
