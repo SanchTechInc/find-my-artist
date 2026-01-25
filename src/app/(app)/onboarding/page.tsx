@@ -1,62 +1,88 @@
 "use client";
 
-export const dynamic = "force-dynamic";
-
 import { useState } from "react";
-import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
+  const ROLES = [
+    { label: "Artist", value: "artist" },
+    { label: "Writer", value: "writer" },
+    { label: "Musician", value: "musician" },
+    { label: "Collaborator", value: "collaborator" },
+  ] as const;
+
+  const INTENTS = [
+    { label: "Collaborate", value: "collaborate" },
+    { label: "Share", value: "share" },
+    { label: "Hire", value: "hire" },
+    { label: "Explore", value: "explore" },
+  ] as const;
 
 export default function OnboardingPage() {
-  const { user } = useUser();
-  const [birthdate, setBirthdate] = useState("");
+  const router = useRouter();
+  
+  const [role, setRole] = useState<(typeof ROLES)[number]["value"] | null>(
+    null,
+  );
+  const [intent, setIntent] = useState<
+    (typeof INTENTS)[number]["value"] | null
+  >(null);
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  const canContinue = Boolean(role && intent);
 
-    if (!user || !birthdate) return;
+  const handleContinue = () => {
+    if (!canContinue) return;
 
-    const birth = new Date(birthdate);
-    const today = new Date();
+    // Temp: no peristence
+    // later will save to db
 
-    const age =
-      today.getFullYear() -
-      birth.getFullYear() -
-      (today < new Date(today.getFullYear(), birth.getMonth(), birth.getDate())
-        ? 1
-        : 0);
+    router.push("/dashboard");
+  };
 
-    const isAdult = age >= 18;
-
-    await user.update({
-      unsafeMetadata: {
-        isAdult,
-      },
-    });
-
-    window.location.href = "/";
-  }
+  // TODO: (Phase 5): Prevent dashboard access until onboarding is complete
 
   return (
-    <main className="max-w-md mx-auto mt-20">
-      <h1 className="text-2xl font-bold mb-4">Before you continue</h1>
-      <p className="mb-4">
-        Please confirm your date of birth. This helps us keep content
-        age-appropriate.
-      </p>
+    <div style={{ maxWidth: 600, margin: "0 auto", padding: 24 }}>
+      <h1>Tell us about yourself</h1>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="date"
-          required
-          className="w-full border p-2 mb-4"
-          value={birthdate}
-          onChange={(e) => setBirthdate(e.target.value)}
-        />
+      <section>
+        <h3>I am a…</h3>
+        {ROLES.map(({ label, value }) => (
+          <button
+            key={value}
+            onClick={() => role !== value && setRole(value)}
+            style={{
+              marginRight: 8,
+              marginBottom: 8,
+              fontWeight: role === value ? "bold" : "normal",
+            }}
+          >
+            {label}
+          </button>
+        ))}
+      </section>
 
-        <button type="submit" className="w-full bg-black text-white py-2">
+      <section style={{ marginTop: 24 }}>
+        <h3>I’m here to…</h3>
+        {INTENTS.map(({ label, value }) => (
+          <button
+            key={value}
+            onClick={() => setIntent(value)}
+            style={{
+              marginRight: 8,
+              marginBottom: 8,
+              fontWeight: intent === value ? "bold" : "normal",
+            }}
+          >
+            {label}
+          </button>
+        ))}
+      </section>
+
+      <div style={{ marginTop: 32 }}>
+        <button disabled={!canContinue} onClick={handleContinue}>
           Continue
         </button>
-      </form>
-    </main>
+      </div>
+    </div>
   );
 }
